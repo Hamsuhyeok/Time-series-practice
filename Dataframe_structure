@@ -1,0 +1,11 @@
+# 데이터프레임 확인
+df = df[df.Rainfall_Bastia_Umbra.notna()].reset_index(drop=True)
+# Drop one of the target columns, so we can focus on only one target
+df = df.drop(['Depth_to_Groundwater_P24', 'Temperature_Petrignano'], axis=1)
+
+# Simplify column names
+df.columns = ['Date', 'Rainfall', 'Depth_to_Groundwater', 'Temperature', 'Drainage_Volume', 'River_Hydrometry']
+
+targets = ['Depth_to_Groundwater']
+features = [feature for feature in df.columns if feature not in targets]
+df.head()
