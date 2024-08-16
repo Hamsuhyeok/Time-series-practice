@@ -9,3 +9,8 @@ df.columns = ['Date', 'Rainfall', 'Depth_to_Groundwater', 'Temperature', 'Draina
 targets = ['Depth_to_Groundwater']
 features = [feature for feature in df.columns if feature not in targets]
 df.head()
+
+from datetime import datetime, date 
+
+df['Date'] = pd.to_datetime(df.Date, format = '%d/%m/%Y')
+df.head().style.set_properties(subset=['Date'], **{'background-color': 'dodgerblue'})
