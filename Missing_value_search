@@ -35,3 +35,65 @@ for i in range(5):
     ax[i].set_xlim([date(2009, 1, 1), date(2020, 6, 30)])
 
 plt.show()
+
+
+f, ax = plt.subplots(nrows=2, ncols=1, figsize=(15, 15))
+old = df.River_Hydrometry.copy()
+df['River_Hydrometry'] = np.where((df.River_Hydrometry == 0),np.nan, df.River_Hydrometry)
+
+sns.lineplot(x=df.Date, y=old.fillna(np.inf), ax=ax[0], color='darkorange', label = 'original')
+sns.lineplot(x=df.Date, y=df.River_Hydrometry.fillna(np.inf), ax=ax[0], color='dodgerblue', label = 'modified')
+ax[0].set_title('Feature: Hydrometry', fontsize=14)
+ax[0].set_ylabel(ylabel='Hydrometry', fontsize=14)
+
+old = df.Drainage_Volume.copy()
+df['Drainage_Volume'] = np.where((df.Drainage_Volume == 0),np.nan, df.Drainage_Volume)
+
+sns.lineplot(x=df.Date, y=old.fillna(np.inf), ax=ax[1], color='darkorange', label = 'original')
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[1], color='dodgerblue', label = 'modified')
+ax[1].set_title('Feature: Volume', fontsize=14)
+ax[1].set_ylabel(ylabel='Volume', fontsize=14)
+
+
+for i in range(2):
+    ax[i].set_xlim([date(2009, 1, 1), date(2020, 6, 30)])
+
+plt.show()
+
+
+f, ax = plt.subplots(nrows=1, ncols=1, figsize=(16,5))
+sns.heatmap(df.T.isna(), cmap='Blues')
+ax.set_title('Fields with Missing Values', fontsize=16)
+#for tick in ax.xaxis.get_major_ticks():
+#    tick.label.set_fontsize(14) 
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(14)
+plt.show()
+
+f, ax = plt.subplots(nrows=4, ncols=1, figsize=(15, 12))
+
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(0), ax=ax[0], color='darkorange', label = 'modified')
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[0], color='dodgerblue', label = 'original')
+ax[0].set_title('Fill NaN with 0', fontsize=14)
+ax[0].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+mean_val = df.Drainage_Volume.mean()
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(mean_val), ax=ax[1], color='darkorange', label = 'modified')
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[1], color='dodgerblue', label = 'original')
+ax[1].set_title(f'Fill NaN with Mean Value ({mean_val:.0f})', fontsize=14)
+ax[1].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.ffill(), ax=ax[2], color='darkorange', label = 'modified')
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[2], color='dodgerblue', label = 'original')
+ax[2].set_title(f'FFill', fontsize=14)
+ax[2].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.interpolate(), ax=ax[3], color='darkorange', label = 'modified')
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[3], color='dodgerblue', label = 'original')
+ax[3].set_title(f'Interpolate', fontsize=14)
+ax[3].set_ylabel(ylabel='Volume C10 Petrignano', fontsize=14)
+
+for i in range(4):
+    ax[i].set_xlim([date(2019, 5, 1), date(2019, 10, 1)])
+plt.tight_layout()
+plt.show()
