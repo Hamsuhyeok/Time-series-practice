@@ -1,0 +1,31 @@
+f, ax = plt.subplots(nrows=5, ncols=1, figsize=(15, 25))
+
+sns.lineplot(x=df.Date, y=df.Rainfall.fillna(np.inf), ax=ax[0], color='dodgerblue')
+ax[0].set_title('Feature: Rainfall', fontsize=14)
+ax[0].set_ylabel(ylabel='Rainfall', fontsize=14)
+
+
+sns.lineplot(x=df.Date, y=df.Temperature.fillna(np.inf), ax=ax[1], color='dodgerblue',label='Bastia Umbra')
+ax[1].set_title('Feature: Temperature', fontsize=14)
+ax[1].set_ylabel(ylabel='Temperature', fontsize=14)
+
+
+sns.lineplot(x=df.Date, y=df.Drainage_Volume.fillna(np.inf), ax=ax[2], color='dodgerblue')
+ax[2].set_title('Feature: Volume', fontsize=14)
+ax[2].set_ylabel(ylabel='Volume', fontsize=14)
+
+
+sns.lineplot(x=df.Date, y=df.River_Hydrometry.fillna(np.inf), ax=ax[3], color='dodgerblue')
+ax[3].set_title('Feature: Hydrometry', fontsize=14)
+ax[3].set_ylabel(ylabel='Hydrometry', fontsize=14)
+
+
+sns.lineplot(x=df.Date, y=df.Depth_to_Groundwater.fillna(np.inf), ax=ax[4], color='dodgerblue')
+ax[4].set_title('Target: Depth to Groundwater', fontsize=14)
+ax[4].set_ylabel(ylabel='Depth to Groundwater', fontsize=14)
+
+
+for i in range(5):
+    ax[i].set_xlim([date(2009, 1, 1), date(2020, 6, 30)])
+
+plt.show()
