@@ -1,3 +1,9 @@
+#결측값에 대한 내용!
+
+#보간법에 대한 내용
+#시계열 데이터의 경우는 보간법과 같은 데이터 missing value를 대체하면 좋다.
+
+
 f, ax = plt.subplots(nrows=5, ncols=1, figsize=(15, 25))
 
 sns.lineplot(x=df.Date, y=df.Rainfall.fillna(np.inf), ax=ax[0], color='dodgerblue')
